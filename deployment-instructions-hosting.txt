@@ -1,0 +1,50 @@
+Langkah Upload Laravel Sarpras ke hPanel (Hostinger)
+
+1) Siapkan Berkas
+- Zip folder project kecuali folder vendor (opsional jika mau composer install di hosting). Namun di shared hosting, lebih praktis upload semua termasuk vendor.
+- File penting yang perlu ada: public/, app/, bootstrap/, config/, database/, resources/, routes/, storage/, vendor/, artisan, composer.json, composer.lock, .env (isi kredensial hosting) atau gunakan .env.production-hosting ini sebagai template.
+
+2) Buat Database di hPanel
+- Masuk hPanel -> Databases -> MySQL Databases
+- Buat database, user, dan password. Catat 3 data itu + host (umumnya localhost di Hostinger)
+- Buka phpMyAdmin dari hPanel, pilih database yang dibuat, Import -> pilih file database/sarpras.sql -> Go.
+
+3) Konfigurasi .env di hosting
+- Salin file .env.production-hosting menjadi .env di root project.
+- Isi APP_KEY: jalankan php artisan key:generate (lihat opsi 5 jika tidak bisa).
+- Isi DB_DATABASE, DB_USERNAME, DB_PASSWORD sesuai yang dibuat di langkah 2.
+- Set APP_URL ke domain/URL Anda, misal https://namadomain.com
+- Pastikan APP_ENV=production, APP_DEBUG=false
+
+4) Struktur direktori public
+- Pada shared hosting, document root biasanya menunjuk ke public_html/. Anda bisa:
+  Opsi A (direkomendasi cepat): Upload isi folder public/ ke public_html/, sedangkan folder project utama (app, vendor, dll) diletakkan di luar public_html/, lalu edit index.php di public_html/ agar require path mengarah ke direktori di atas.
+  Opsi B: Taruh seluruh project di public_html/ dan tetap gunakan public/ sebagai webroot via .htaccess (kurang aman). Jika pilih ini, pastikan APP_URL benar dan .htaccess public/ tetap.
+
+5) Generate APP_KEY di hosting
+- Jika akses terminal tersedia: php artisan key:generate
+- Jika tidak ada terminal, Anda bisa generate offline dan isi manual di .env. (Saya dapat bantu buatkan jika perlu)
+
+6) Storage link (akses file upload)
+- Jika terminal tersedia: php artisan storage:link
+- Jika tidak bisa membuat symlink di shared hosting, project ini sudah memiliki route('media') untuk melayani file dari storage/app/public tanpa symlink. Pastikan FILESYSTEM_DISK=public dan upload disimpan ke storage/app/public.
+
+7) Build aset frontend
+- Karena keterbatasan npm di shared hosting, upload juga folder public/build hasil vite build dari lokal (sudah ada). Jika perlu rebuild lokal: node node_modules/vite/bin/vite.js build lalu upload ulang public/build/.
+
+8) Set permission
+- Pastikan folder storage/ dan bootstrap/cache/ writable (755 atau 775). Jika ada error permission, ubah menjadi 775.
+
+9) Cron/Queue (opsional)
+- Jika butuh queue, gunakan QUEUE_CONNECTION=sync di .env hosting atau atur cron untuk queue:work.
+
+10) Testing
+- Akses domain -> pastikan halaman utama tampil.
+- Coba login admin, buat laporan, upload foto dan bukti, cek tampilan gambar via route media.
+
+Jika Anda ingin, saya bisa siapkan arsip ZIP siap upload berisi:
+- Seluruh project
+- .env contoh untuk hosting
+- Dump database database/sarpras.sql
+
+Silakan kabari preferensi struktur (Opsi A atau B) dan kredensial DB hosting agar saya bisa sesuaikan .env Anda.

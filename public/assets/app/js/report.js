@@ -1,0 +1,1 @@
+// Deprecated: coordinate capture removed. This file is no longer used.
