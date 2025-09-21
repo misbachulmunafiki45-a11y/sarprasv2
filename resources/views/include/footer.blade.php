@@ -1,7 +1,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website SMPN2 2024</span>
+                        <span>Copyright; STEMDA 2025 SARPRAS V2</span>
                     </div>
                 </div>
             </footer>

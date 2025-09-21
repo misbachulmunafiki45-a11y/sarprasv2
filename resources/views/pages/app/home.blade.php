@@ -8,7 +8,7 @@
         @else
         <h6 class="greeting">Selamat datang</h6>
         @endauth
-        <h4 class="home-headline">SIAP LAPOR SARANA DAN PRASARANA SEKOLAH</h4>
+        <h4 class="home-headline">SIAP LAPOR SARPRAS SEKOLAH</h4>
 
         <div class="d-flex align-items-center justify-content-between gap-4 py-3 overflow-auto" 
         id="category" style="white-space: nowrap;">

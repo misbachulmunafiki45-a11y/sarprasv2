@@ -75,7 +75,7 @@ class ReportController extends Controller
     public function store(StoreReportRequest $request)
     {
         $data = $request->validated();
-        $data['code'] = 'SMPN1' . mt_rand(10000, 999999);
+        // Kode laporan akan dihasilkan otomatis di model Report (format: SRP-dd-mm-yy-SMKH2[-n])
         $data['resident_id'] = Auth::user()->resident->id;
         $data['image'] = $request->file('image')->store('assets/report/image', 'public');
 
