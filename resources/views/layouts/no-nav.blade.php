@@ -23,7 +23,7 @@
 
     {{-- Leaflet JS removed --}}
 
-    <script src="{{ asset('assets/app/js/take.js') }}"></script>
+    {{-- take.js moved to pages that membutuhkan akses kamera saja --}}
 
     {{-- report.js removed --}}
 

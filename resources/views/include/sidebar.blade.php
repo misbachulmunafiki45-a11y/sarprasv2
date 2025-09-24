@@ -23,6 +23,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.dashboard') }}">
@@ -53,3 +54,5 @@
 
 
         </ul>
+
+<!-- Hapus JS toggle custom, gunakan bawaan sb-admin-2 via #sidebarToggleTop -->

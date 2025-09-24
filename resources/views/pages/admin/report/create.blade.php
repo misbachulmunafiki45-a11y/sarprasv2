@@ -92,10 +92,13 @@
          
             <div class="form-group">
                 <label for="image">Bukti Laporan</label>
-                <input type="file" class="form-control @error('image') 
-                is-invalid @enderror" id="image" name="image"
-                value="{{ old ('image') }}">
-            
+                <input type="file" accept="image/*" capture="environment" class="form-control d-none @error('image') 
+                is-invalid @enderror" id="image" name="image">
+                <div class="d-flex gap-2 mt-2">
+                  <button type="button" class="btn btn-success" id="btnCamera">Buka Kamera (Belakang)</button>
+                  <button type="button" class="btn btn-secondary" id="btnGallery">Pilih dari Galeri</button>
+                </div>
+                <div id="preview" class="mt-2"></div>
                 @error('image')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -121,4 +124,41 @@
      </div>
  </div>
 
+@endsection
+
+@section('scripts')
+<script>
+(function(){
+  const fileInput = document.getElementById('image');
+  const btnCamera = document.getElementById('btnCamera');
+  const btnGallery = document.getElementById('btnGallery');
+  const preview = document.getElementById('preview');
+
+  function openWithCamera(){
+    if(fileInput) fileInput.click();
+  }
+  function openFromGallery(){
+    if(!fileInput) return;
+    const hadCapture = fileInput.hasAttribute('capture');
+    if(hadCapture) fileInput.removeAttribute('capture');
+    fileInput.click();
+    setTimeout(() => { try { fileInput.setAttribute('capture','environment'); } catch(e) {} }, 500);
+  }
+  function renderPreview(){
+    preview.innerHTML = '';
+    const file = fileInput.files && fileInput.files[0];
+    if(!file) return;
+    const img = document.createElement('img');
+    img.style.maxWidth = '220px';
+    img.style.height = 'auto';
+    img.alt = 'preview';
+    img.src = URL.createObjectURL(file);
+    img.onload = () => URL.revokeObjectURL(img.src);
+    preview.appendChild(img);
+  }
+  if(btnCamera) btnCamera.addEventListener('click', openWithCamera);
+  if(btnGallery) btnGallery.addEventListener('click', openFromGallery);
+  if(fileInput) fileInput.addEventListener('change', renderPreview);
+})();
+</script>
 @endsection

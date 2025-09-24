@@ -53,7 +53,7 @@
             const badge = document.getElementById('adminNotifBadge');
             async function fetchAdminCount() {
                 try {
-                    const res = await fetch('{{ route('admin.notifications.count') }}', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                    const res = await fetch('{{ route('admin.notifications.admin_count') }}', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
                     if (!res.ok) return;
                     const data = await res.json();
                     const count = Number(data.count || 0);

@@ -64,13 +64,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/notifications/count', [ReportController::class, 'notificationCount'])->name('notifications.count');
+    Route::get('/notifications/count', [ReportController::class, 'notificationCount'])->name('notifications.admin_count');
 });
 
 // Route media non-symlink untuk melayani file dari storage/app/public
 Route::get('/media/{path}', function (string $path) {
     // Hindari path traversal
-    if (str_contains($path, '..')) {
+    if (strpos($path, '..') !== false) {
         abort(400);
     }
 

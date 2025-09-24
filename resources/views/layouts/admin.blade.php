@@ -23,7 +23,15 @@
    <link href="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-
+   <style>
+    /* Perbaikan responsif tambahan untuk mobile */
+    @media (max-width: 576px) {
+        .sidebar .sidebar-brand-text { font-size: 0.85rem; }
+        .container-fluid { padding-left: 0.75rem; padding-right: 0.75rem; }
+    }
+    .table-responsive { overflow-x: auto; }
+    img { max-width: 100%; height: auto; }
+   </style>
 </head>
 
 <body id="page-top">
@@ -84,15 +92,20 @@
     <script src="{{asset('assets/admin/vendor/chart.js/Chart.min.js')}}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{asset('assets/admin/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{asset('assets/admin/js/demo/chart-pie-demo.js')}}"></script>
+    @php
+        $verArea = @filemtime(public_path('assets/admin/js/demo/chart-area-demo.js')) ?: '';
+        $verPie = @filemtime(public_path('assets/admin/js/demo/chart-pie-demo.js')) ?: '';
+        $verDT = @filemtime(public_path('assets/admin/js/demo/datatables-demo.js')) ?: '';
+    @endphp
+    <script src="{{asset('assets/admin/js/demo/chart-area-demo.js')}}?v={{ $verArea }}"></script>
+    <script src="{{asset('assets/admin/js/demo/chart-pie-demo.js')}}?v={{ $verPie }}"></script>
 
     <!-- Page level plugins -->
     <script src="{{ asset('assets/admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset('assets/admin/js/demo/datatables-demo.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/demo/datatables-demo.js') }}?v={{ $verDT }}"></script>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 

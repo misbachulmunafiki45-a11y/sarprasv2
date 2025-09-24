@@ -20,57 +20,55 @@
         <h6 class="m-0 font-weight-bold text-primary">Detail Laporan</h6>
     </div>
     <div class="card-body">
-        <table class="table table-bordered">
-            <tr>
-                <td>Kode Laporan</td>
-                <td>{{ $report->code }}</td>
-            </tr>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <td class="no-wrap">Kode Laporan</td>
+                    <td class="text-break">{{ $report->code }}</td>
+                </tr>
 
-            <tr>
-                <td>Pelapor</td>
-                <td>{{ $report->resident->user->email }} - {{ $report->resident->user->name }}</td>
-            </tr>
+                <tr>
+                    <td class="no-wrap">Pelapor</td>
+                    <td class="text-break">{{ $report->resident->user->email }} - {{ $report->resident->user->name }}</td>
+                </tr>
 
-            <tr>
-                <td>Kategori Laporan</td>
-                <td>{{ $report->reportCategory->name }} </td>
-            </tr>
+                <tr>
+                    <td class="no-wrap">Kategori Laporan</td>
+                    <td class="text-break">{{ $report->reportCategory->name }} </td>
+                </tr>
 
-            <tr>
-                <td>judul Laporan</td>
-                <td>{{ $report->title}} </td>
-            </tr>
-            <tr>
-                <td>Tanggal</td>
-                <td>
-                    {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
-                </td>
-            </tr>
-            <tr>
-                <td>Posisi</td>
-                <td>{{ $report->address }}</td>
-            </tr>
+                <tr>
+                    <td class="no-wrap">judul Laporan</td>
+                    <td class="text-break">{{ $report->title}} </td>
+                </tr>
+                <tr>
+                    <td class="no-wrap">Tanggal</td>
+                    <td class="text-break">
+                        {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="no-wrap">Posisi</td>
+                    <td class="text-break">{{ $report->address }}</td>
+                </tr>
 
-            <tr>
-                <td>Deskripsi Laporan</td>
-                <td>{{ $report->description }} </td>
-            </tr>
+                <tr>
+                    <td class="no-wrap">Deskripsi Laporan</td>
+                    <td class="text-break">{{ $report->description }} </td>
+                </tr>
 
-            <tr>
-                <td>Bukti Laporan</td>
-                <td>
-                    @if ($report->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($report->image))
-                        <img src="{{ route('media', ['path' => $report->image]) }}" alt="image" width="200">
-                    @else
-                        <span class="text-muted">-</span>
-                    @endif
-                </td>
-            </tr>
-
-            <!-- Latitude/Longitude/Map View removed by request -->
-
-
-        </table>
+                <tr>
+                    <td class="no-wrap">Bukti Laporan</td>
+                    <td>
+                        @if ($report->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($report->image))
+                            <img src="{{ route('media', ['path' => $report->image]) }}" alt="image" class="img-fluid" style="max-width: 280px; height: auto;">
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -85,11 +83,11 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Bukti</th>
-                        <th>Status</th>
+                        <th class="no-wrap">No</th>
+                        <th class="no-wrap">Bukti</th>
+                        <th class="no-wrap">Status</th>
                         <th>Deskripsi</th>
-                        <th>Aksi</th>
+                        <th class="no-wrap">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,7 +97,7 @@
        
                         <td>
                             @if($status->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($status->image))
-                                <img src="{{ route('media', ['path' => $status->image]) }}" alt="image" width="100">
+                                <img src="{{ route('media', ['path' => $status->image]) }}" alt="image" width="100" class="img-fluid">
                             @else
                                 -
                             @endif
@@ -112,12 +110,12 @@
                         </td>
                         <td>
                             <a href="{{ route('admin.report-status.edit', $status->id) }}" 
-                                class="btn btn-warning">Edit</a>
+                                class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('admin.report-status.destroy', $status->id) }}" 
                                 method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </td>
                     </tr>

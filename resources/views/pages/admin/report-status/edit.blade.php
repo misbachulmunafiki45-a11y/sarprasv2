@@ -27,7 +27,7 @@
                 @endif
                 <br>
                 <!-- Satu input file disembunyikan; dua tombol untuk kamera/galeri -->
-                <input type="file" accept="image/*" class="form-control d-none @error('image') is-invalid @enderror" 
+                <input type="file" accept="image/*" capture="environment" class="form-control d-none @error('image') is-invalid @enderror" 
                 id="image" name="image">
                 <div class="d-flex gap-2 mt-2">
                   <button type="button" class="btn btn-success" id="btnCamera">Buka Kamera (Belakang)</button>
@@ -105,19 +105,17 @@
   const preview = document.getElementById('preview');
 
   function openWithCamera(){
-    try {
-      fileInput.setAttribute('accept','image/*');
-      fileInput.setAttribute('capture','environment');
-    } catch(e) {}
-    fileInput.click();
+    if(fileInput) fileInput.click();
   }
 
   function openFromGallery(){
-    try {
-      fileInput.setAttribute('accept','image/*');
-      fileInput.removeAttribute('capture');
-    } catch(e) {}
+    if(!fileInput) return;
+    const hadCapture = fileInput.hasAttribute('capture');
+    if(hadCapture) fileInput.removeAttribute('capture');
     fileInput.click();
+    setTimeout(() => {
+      try { fileInput.setAttribute('capture','environment'); } catch(e) {}
+    }, 500);
   }
 
   function renderPreview(){

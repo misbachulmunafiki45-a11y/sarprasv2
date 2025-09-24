@@ -18,3 +18,7 @@
 
 @endsection
 
+@section('scripts')
+<script src="{{ asset('assets/app/js/take.js') }}"></script>
+@endsection
+

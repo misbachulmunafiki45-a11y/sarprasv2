@@ -8,18 +8,21 @@
 
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
+    <div class="card-header py-3 d-flex align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Daftar Data Pelapor</h6>
+        <div class="d-md-none">
+            <small class="text-muted">Geser tabel ke samping</small>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th class="no-wrap">No</th>
                         <th>Nama</th>
-                        <th>Icon</th>
-                        <th>Aksi</th>
+                        <th class="no-wrap">Icon</th>
+                        <th class="no-wrap">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,14 +35,14 @@
                         </td>
                         <td>
                             <a href="{{ route('admin.report-category.edit', $category->id) }}" 
-                                class="btn btn-warning">Edit</a>
+                                class="btn btn-warning btn-sm">Edit</a>
 
                             <a href="{{ route('admin.report-category.show', $category->id) }}" 
-                                class="btn btn-info">Show</a>
+                                class="btn btn-info btn-sm">Show</a>
 
                             <form action="{{ route('admin.report-category.destroy', $category->id) }}" 
                                 method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 @csrf
                                 @method('DELETE')
                             </form>

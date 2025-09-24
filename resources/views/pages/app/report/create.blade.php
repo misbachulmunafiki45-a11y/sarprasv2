@@ -47,8 +47,8 @@
 
         <div class="form-group mb-3">
             <label for="image">Foto</label>
-            <!-- Satu input file, dipicu oleh dua tombol: Kamera (belakang) atau Galeri -->
-            <input type="file" accept="image/*" class="form-control d-none @error('image') is-invalid @enderror" id="image" name="image">
+            <!-- Satu input file, default mengarah ke kamera (belakang) di perangkat mobile -->
+            <input type="file" accept="image/*" capture="environment" class="form-control d-none @error('image') is-invalid @enderror" id="image" name="image">
             <div class="d-flex gap-2 mt-2">
                 <button type="button" class="btn btn-success" id="btnCamera">Buka Kamera (Belakang)</button>
                 <button type="button" class="btn btn-secondary" id="btnGallery">Pilih dari Galeri</button>
@@ -81,19 +81,21 @@
    const preview = document.getElementById('preview');
 
    function openWithCamera(){
-     try {
-       fileInput.setAttribute('accept','image/*');
-       fileInput.setAttribute('capture','environment'); // hint: back camera
-     } catch(e) {}
-     fileInput.click();
+     // capture sudah diset melalui atribut HTML (lebih kompatibel di mobile)
+     if(fileInput) fileInput.click();
    }
 
    function openFromGallery(){
-     try {
-       fileInput.setAttribute('accept','image/*');
-       fileInput.removeAttribute('capture'); // allow picker/gallery
-     } catch(e) {}
+     // Nonaktifkan capture sementara untuk membuka galeri/file picker,
+     // lalu kembalikan agar klik berikutnya tetap membuka kamera.
+     if(!fileInput) return;
+     const hadCapture = fileInput.hasAttribute('capture');
+     if(hadCapture) fileInput.removeAttribute('capture');
      fileInput.click();
+     setTimeout(() => {
+       // Pulihkan agar default kembali kamera
+       try { fileInput.setAttribute('capture','environment'); } catch(e) {}
+     }, 500);
    }
 
    function renderPreview(){
