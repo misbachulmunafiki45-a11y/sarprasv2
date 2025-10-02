@@ -238,8 +238,8 @@ textarea.form-control {
     opacity: 1;
 }
 
-.nav-mobile a .fas {
-    font-size: 1.5rem;
+.nav-mobile a .fas, .nav-mobile a .fa-solid {
+    font-size: 2rem;
 }
 
 .header-nav {
